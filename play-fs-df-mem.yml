@@ -1,0 +1,20 @@
+---
+- hosts: "{{ host }}"
+  tasks:
+    - name: estado de /var/lib/docker
+      command: df -h /var/lib/docker
+      register: out
+	  - debug:
+        var: out.stdout_lines
+	 
+    - name: docker fs state
+      command: sudo docker system df
+      register: out
+	  - debug:
+        var: out.stdout_lines
+	 
+    - name: memoria del nodo
+      command: free -m
+	    register: out
+	  - debug:
+        var: out.stdout_lines
