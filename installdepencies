@@ -31,7 +31,7 @@
         - kubelet
         - kubeadm
     - name: Start Sevices
-      systemctl:
+      service:
         name: "{{item}}"
         enabled: true
         state: restarted
