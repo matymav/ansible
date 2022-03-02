@@ -20,12 +20,18 @@
         description: kubernetes repository
         baseurl: https://packages.cloud.google.com/yum/repos/kubernetes-el7-x86_64
         gpgcheck: no
+    - name: Add docker repo
+      yum_repository:
+        name: dockerce-repo
+        description: docker ce repository
+        baseurl: https://download.docker.com/linux/centos/docker-ce.repo
+        gpgcheck: no
     - name: Install all necesary
       yum: 
         name: "{{item}}"
         state: present
       loop:
-        - docker
+        - docker-ce
         - kubelet
         - kubeadm
     - name: Start Sevices
@@ -35,7 +41,7 @@
         state: restarted
       loop:
         - kubelet
-        - podman
+        - docker
         
         
         
