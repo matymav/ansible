@@ -14,6 +14,12 @@
         name: epel-release
         state: latest
         update_cache: yes
+    - name: Add kubernetes repo
+      yum_repository:
+        name: kube-repo
+        description: kubernetes repository
+        baseurl: https://packages.cloud.google.com/yum/repos/kubernetes-el7-x86_64
+        update_cache: yes
     - name: Install all necesary
       yum: 
         name: "{{item}}"
@@ -21,5 +27,15 @@
       loop:
         - docker
         - kubelet
+        - kubeadm
+    - name: Start Sevices
+      systemctl:
+        name: "{{item}}"
+        loop:
+          - kubelet
+          - docker
+        enabled: true
+        state: restarted
+        
         
         
