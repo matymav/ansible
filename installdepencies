@@ -1,0 +1,25 @@
+---
+- hosts:
+  become: yes
+  tasks:
+    - name: Swap Off
+      shell: swapoff -a
+    - name: Swap Off in Fstab
+      replace:
+        path: /etc/fstab
+        regexp: '^([^#].*?\sswap\s+sw\s+.*)$'
+        replace: '# \1'
+    - name: Add epel repo
+      dnf:
+        name: epel-release
+        state: latest
+        update_cache: yes
+    - name: Install all necesary
+      yum: 
+        name: "{{item}}"
+        state: latest
+      loop:
+        - docker
+        - kubelet
+        
+        
