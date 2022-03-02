@@ -19,7 +19,7 @@
         name: kube-repo
         description: kubernetes repository
         baseurl: https://packages.cloud.google.com/yum/repos/kubernetes-el7-x86_64
-        update_cache: yes
+        gpgcheck: no
     - name: Install all necesary
       yum: 
         name: "{{item}}"
@@ -31,11 +31,11 @@
     - name: Start Sevices
       systemctl:
         name: "{{item}}"
-        loop:
-          - kubelet
-          - docker
         enabled: true
         state: restarted
+      loop:
+        - kubelet
+        - docker
         
         
         
