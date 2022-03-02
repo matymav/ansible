@@ -23,7 +23,7 @@
     - name: Install all necesary
       yum: 
         name: "{{item}}"
-        state: latest
+        state: present
       loop:
         - docker
         - kubelet
@@ -35,7 +35,7 @@
         state: restarted
       loop:
         - kubelet
-        - docker
+        - podman
         
         
         
